@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>История</title>
+    <link rel="stylesheet" href="/css/history.css">
+</head>
+<body>
+<div class="main">
+    <div class="container">
+        <form class="form_conteiner" action="index.html" method="post">
+            <div class="form_title">
+                <span>История</span>
+            </div>
+            <div class="form_input">
+                <div class="form_column_left form_column">
+                    <input type="date" name="date" value="">
+                </div>
+                <div class="form_column_right form_column">
+                    <div class="form_column_left form_column">
+                        <select name="left_val[]">
+                        {{#currencies}}
+                        <option value="{{name}}">{{name}}</option>
+                        {{/currencies}}
+                        </select>
+                    </div>
+                    <div class="form_column_right form_column">
+                        <select name="right_val[]">
+                            {{#currencies}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/currencies}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form_input form_table">
+                <table>
+                    <tr>
+                        <th>Исходная валюта</th>
+                        <th>Целевая валюта</th>
+                        <th>Исходная сумма</th>
+                        <th>Целевая сумма</th>
+                        <th>Дата</th>
+                    </tr>
+                    <tr>
+                        <td>USD(Доллар США)</td>
+                        <td>RUB(Российский Рубль)</td>
+                        <td>1</td>
+                        <td>27.63</td>
+                        <td>12.06.2007</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_button form_input">
+                <input type="submit" value="Поиск">
+            </div>
+            <div class="error">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

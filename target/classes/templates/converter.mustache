@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Конвертер</title>
+    <link rel="stylesheet" href="/css/converter.css">
+</head>
+<body>
+<div class="main">
+    <div class="container">
+        <form class="form_conteiner" action="/converter" method="post">
+            <div class="form_title">
+                <span>Конвертер</span>
+            </div>
+            <div class="form_input">
+                <div class="form_column_left form_column">
+                    <select name="left_id">
+                        {{#currency_left}}
+                        <option selected value="{{id}}">{{name}}</option>
+                        {{/currency_left}}
+                        {{#currencies_left}}
+                        <option value="{{id}}">{{name}}</option>
+                        {{/currencies_left}}
+                    </select>
+                </div>
+                <div class="form_column_right form_column">
+                    <select name="right_id">
+                        {{#currency_right}}
+                        <option selected value="{{id}}">{{name}}</option>
+                        {{/currency_right}}
+                        {{#currencies_right}}
+                        <option value="{{id}}">{{name}}</option>
+                        {{/currencies_right}}
+                    </select>
+                </div>
+            </div>
+            <div class="form_input">
+                <div class="form_column_left form_column">
+                    <input type="text" name="left_val" value="{{seed}}">
+                </div>
+                <div class="form_column_right form_column">
+                    <input type="text" value="{{result}}" readonly>
+                </div>
+            </div>
+            <div class="form_button form_input">
+                <input type="submit" value="Конвертировать">
+            </div>
+            <div class="error">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
