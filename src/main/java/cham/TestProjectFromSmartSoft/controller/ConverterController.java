@@ -79,8 +79,9 @@ public class ConverterController {
 
         // Заполнение значениями строк числа для конвертации и результата конвертации
         // с форматированием до двух знаков после запятой
-        String seed = String.format("%.2f", Double.parseDouble(left_val));
-        String result = String.format("%.2f", calculate(currencyRepo.findById(left_id).get(0).getRate(),
+        String seed = String.format(Locale.ROOT, "%.2f", Double.parseDouble(left_val));
+        String result = String.format(Locale.ROOT, "%.2f",
+                calculate(currencyRepo.findById(left_id).get(0).getRate(),
                 currencyRepo.findById(right_id).get(0).getRate(), Double.parseDouble(left_val)));
         model.put("seed", seed);
         model.put("result", result);
@@ -206,5 +207,7 @@ public class ConverterController {
         // Загружаем результат в БД
         for (Currency currency: currencies)
             currencyRepo.save(currency);
+
+        currencyRepo.save(new Currency("RUB(Российский рубль)", 1.0, dateNow()));
     }
 }

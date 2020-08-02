@@ -23,7 +23,13 @@ public class XMLParser {
     //Метод парсинга дажнных с сайта
     public static ArrayList<Currency> parse() throws ParserConfigurationException, SAXException, IOException {
 
+        // Создание массива результирующих данных
         ArrayList<Currency> currencies = new ArrayList<>();
+
+        // Создание переменной нынешней даты
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
+        String date = formatForDateNow.format(dateNow);
 
         // Создается построитель документа
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -53,9 +59,7 @@ public class XMLParser {
                         rate += '.';
 
                 //Добавляем валюту в таблицу
-                Date dateNow = new Date();
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
-                currencies.add(new Currency(params.item(1).getChildNodes().item(0).getTextContent() + "(" + params.item(3).getChildNodes().item(0).getTextContent() + ") ", Double.parseDouble(rate), formatForDateNow.format(dateNow)));
+                currencies.add(new Currency(params.item(1).getChildNodes().item(0).getTextContent() + "(" + params.item(3).getChildNodes().item(0).getTextContent() + ") ", Double.parseDouble(rate), date));
             }
         }
         return currencies;
