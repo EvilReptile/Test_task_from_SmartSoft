@@ -8,27 +8,33 @@
 <body>
 <div class="main">
     <div class="container">
-        <form class="form_conteiner" action="index.html" method="post">
+        <form class="form_conteiner" action="/history" method="post">
             <div class="form_title">
                 <span>История</span>
             </div>
             <div class="form_input">
                 <div class="form_column_left form_column">
-                    <input type="date" name="date" value="">
+                    <input type="date" name="date" value="{{date}}">
                 </div>
                 <div class="form_column_right form_column">
                     <div class="form_column_left form_column">
-                        <select name="left_val[]">
-                        {{#currencies}}
+                        <select name="left_cur">
+                        {{#currency_left}}
+                        <option selected value={{name}}>{{name}}</option>
+                        {{/currency_left}}
+                        {{#currencies_left}}
                         <option value="{{name}}">{{name}}</option>
-                        {{/currencies}}
+                        {{/currencies_left}}
                         </select>
                     </div>
                     <div class="form_column_right form_column">
-                        <select name="right_val[]">
-                            {{#currencies}}
+                        <select name="right_cur">
+                            {{#currency_right}}
+                            <option selected value={{name}}>{{name}}</option>
+                            {{/currency_right}}
+                            {{#currencies_right}}
                             <option value="{{name}}">{{name}}</option>
-                            {{/currencies}}
+                            {{/currencies_right}}
                         </select>
                     </div>
                 </div>
@@ -42,13 +48,15 @@
                         <th>Целевая сумма</th>
                         <th>Дата</th>
                     </tr>
+                    {{#history}}
                     <tr>
-                        <td>USD(Доллар США)</td>
-                        <td>RUB(Российский Рубль)</td>
-                        <td>1</td>
-                        <td>27.63</td>
-                        <td>12.06.2007</td>
+                        <td>{{currencyLeft}}</td>
+                        <td>{{currencyRight}}</td>
+                        <td>{{rateLeft}}</td>
+                        <td>{{rateRight}}</td>
+                        <td>{{dateConvert}}</td>
                     </tr>
+                    {{/history}}
                 </table>
             </div>
             <div class="form_button form_input">

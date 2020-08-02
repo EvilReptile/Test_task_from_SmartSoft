@@ -1,8 +1,6 @@
 package cham.TestProjectFromSmartSoft.repo;
 
 import cham.TestProjectFromSmartSoft.data.Currency;
-import cham.TestProjectFromSmartSoft.data.CurrencyName;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -10,4 +8,5 @@ import java.util.List;
 public interface CurrencyRepo extends CrudRepository<Currency, Long> {
     List<Currency> findByUpdateDate(String updateDate);
     List<Currency> findById(Integer id);
+    //List<Currency> findByNameAndUpdateDate(String name, String updateDate);
 }
