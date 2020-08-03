@@ -79,8 +79,8 @@ public class ConverterController {
 
         // Заполнение значениями строк числа для конвертации и результата конвертации
         // с форматированием до двух знаков после запятой
-        String seed = String.format("%.2f", Double.parseDouble(left_val));
-        String result = String.format("%.2f", calculate(currencyRepo.findById(left_id).get(0).getRate(),
+        String seed = String.format(Locale.ROOT, "%.2f", Double.parseDouble(left_val));
+        String result = String.format(Locale.ROOT, "%.2f", calculate(currencyRepo.findById(left_id).get(0).getRate(),
                 currencyRepo.findById(right_id).get(0).getRate(), Double.parseDouble(left_val)));
         model.put("seed", seed);
         model.put("result", result);
@@ -175,14 +175,15 @@ public class ConverterController {
         // Формирование фильтра по сегоднешней дате
         Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
+        String date = formatForDateNow.format(dateNow);
         // Запрос данных из БД курсов валют
-        List<Currency> currencies = currencyRepo.findByUpdateDate(formatForDateNow.format(dateNow));
+        List<Currency> currencies = currencyRepo.findByUpdateDate(date);
 
         // Проверка получены ли актуальные данные
         // Если не получены - обновляем и повторяем запрос курсов
         if(currencies.isEmpty()){
             update();
-            currencies = currencyRepo.findByUpdateDate(formatForDateNow.format(dateNow));
+            currencies = currencyRepo.findByUpdateDate(date);
         }
 
         return currencies;
@@ -196,11 +197,11 @@ public class ConverterController {
             // Запускаем парсер валют
             currencies = XMLParser.parse();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            System.out.println("WARNING: " + e.getMessage());
         } catch (SAXException e) {
-            e.printStackTrace();
+            System.out.println("WARNING: " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("WARNING: " + e.getMessage());
         }
 
         // Загружаем результат в БД

@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,11 +21,15 @@ import java.util.Date;
  * разбиением на подъелементы и парсинга нужных
  */
 public class XMLParser {
-    //Ссылка на объект трансляции
-    private static String URL = "http://www.cbr.ru/scripts/XML_daily.asp";
 
     //Метод парсинга дажнных с сайта
     public static ArrayList<Currency> parse() throws ParserConfigurationException, SAXException, IOException {
+        //Ссылка на объект трансляции
+        String URL = getURL();
+
+        // Если конфиг файл пустой - заполняем дефолтным значением
+        if(URL.isEmpty())
+            URL = "http://www.cbr.ru/scripts/XML_daily.asp";
 
         // Создание буффера валют
         ArrayList<Currency> currencies = new ArrayList<>();
@@ -63,6 +68,31 @@ public class XMLParser {
             }
         }
         return currencies;
+    }
+
+    // Встроенный метод для получения адреса поиска
+    private static String getURL(){
+        // Буффер для возвращаемого значения
+        String output = "";
+
+        // Получение конфигурации
+        try(FileReader reader = new FileReader("config.txt")) {
+            // Считываем файл посимвольно
+            int c;
+            while((c=reader.read())!=-1){
+                output += (char)c;
+            }
+        }catch(IOException e){
+            System.out.println("WARNING: " + e.getMessage());
+            return "";
+        }
+
+        // Если конфиг файл пуст - возвращаем пустое значение
+        if(output.equals(""))
+            return "";
+        // Если в конфиге есть параметры - возвращаем адрес для поиска
+        else
+            return output.split("=")[1];
     }
 
 }
