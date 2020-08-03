@@ -8,23 +8,23 @@
 <body>
 <div class="main">
     <div class="container">
-        <form class="login_form" action="index.html" method="post">
+        <form class="login_form" action="/login" method="post">
             <span class="login_form_title">Конвертер валют</span>
             <div class="login_form_input">
-                <input type="text" name="username" placeholder="Логин" value="">
+                <input type="text" name="username" placeholder="Логин">
             </div>
             <div class="login_form_input">
-                <input type="password" name="password" placeholder="Пароль" value="">
+                <input type="password" name="password" placeholder="Пароль">
             </div>
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
             <div class="login_form_button login_form_input">
                 <input type="submit" value="Войти">
             </div>
+            <a href="/registration">Регистрация</a>
             <div class="login_error">
             </div>
         </form>
     </div>
 </div>
-</body>
-</html>
 </body>
 </html>

@@ -8,5 +8,4 @@ import java.util.List;
 public interface CurrencyRepo extends CrudRepository<Currency, Long> {
     List<Currency> findByUpdateDate(String updateDate);
     List<Currency> findById(Integer id);
-    //List<Currency> findByNameAndUpdateDate(String name, String updateDate);
 }

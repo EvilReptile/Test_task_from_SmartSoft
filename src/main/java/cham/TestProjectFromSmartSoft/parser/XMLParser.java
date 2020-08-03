@@ -1,8 +1,6 @@
 package cham.TestProjectFromSmartSoft.parser;
 
 import cham.TestProjectFromSmartSoft.data.Currency;
-import cham.TestProjectFromSmartSoft.repo.CurrencyRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,6 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Класс реализации парсинга данных с сайта
+ * Работает по принципу загрузки XML документа с дальнейшим
+ * разбиением на подъелементы и парсинга нужных
+ */
 public class XMLParser {
     //Ссылка на объект трансляции
     private static String URL = "http://www.cbr.ru/scripts/XML_daily.asp";
@@ -23,7 +26,10 @@ public class XMLParser {
     //Метод парсинга дажнных с сайта
     public static ArrayList<Currency> parse() throws ParserConfigurationException, SAXException, IOException {
 
+        // Создание буффера валют
         ArrayList<Currency> currencies = new ArrayList<>();
+        // Получение сегоднешней даты
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         // Создается построитель документа
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -53,9 +59,7 @@ public class XMLParser {
                         rate += '.';
 
                 //Добавляем валюту в таблицу
-                Date dateNow = new Date();
-                SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
-                currencies.add(new Currency(params.item(1).getChildNodes().item(0).getTextContent() + "(" + params.item(3).getChildNodes().item(0).getTextContent() + ") ", Double.parseDouble(rate), formatForDateNow.format(dateNow)));
+                currencies.add(new Currency(params.item(1).getChildNodes().item(0).getTextContent() + "(" + params.item(3).getChildNodes().item(0).getTextContent() + ") ", Double.parseDouble(rate), date));
             }
         }
         return currencies;

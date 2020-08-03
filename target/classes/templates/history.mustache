@@ -7,6 +7,11 @@
 </head>
 <body>
 <div class="main">
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        <input type="submit" value="Выйти">
+    </form>
+    <a href="/converter">Конвертер</a>
     <div class="container">
         <form class="form_conteiner" action="/history" method="post">
             <div class="form_title">
@@ -59,6 +64,7 @@
                     {{/history}}
                 </table>
             </div>
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
             <div class="form_button form_input">
                 <input type="submit" value="Поиск">
             </div>

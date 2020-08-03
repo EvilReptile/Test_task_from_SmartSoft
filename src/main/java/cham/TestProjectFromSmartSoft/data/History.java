@@ -1,7 +1,5 @@
 package cham.TestProjectFromSmartSoft.data;
 
-import org.hibernate.annotations.NamedQuery;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +11,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String username;
     private String currencyLeft;
     private String currencyRight;
     private String rateLeft;
@@ -22,12 +21,17 @@ public class History {
     public History(){
     }
 
-    public History(String currencyLeft, String currencyRight, String rateLeft, String rateRight, String dateConvert) {
+    public History(String username, String currencyLeft, String currencyRight, String rateLeft, String rateRight, String dateConvert) {
+        this.username = username;
         this.currencyLeft = currencyLeft;
         this.currencyRight = currencyRight;
         this.rateLeft = rateLeft;
         this.rateRight = rateRight;
         this.dateConvert = dateConvert;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getCurrencyLeft() {

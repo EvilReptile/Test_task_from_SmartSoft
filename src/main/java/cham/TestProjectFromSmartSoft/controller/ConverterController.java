@@ -6,10 +6,10 @@ import cham.TestProjectFromSmartSoft.parser.XMLParser;
 import cham.TestProjectFromSmartSoft.repo.CurrencyRepo;
 import cham.TestProjectFromSmartSoft.repo.HistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.xml.sax.SAXException;
 
@@ -86,7 +86,7 @@ public class ConverterController {
         model.put("result", result);
 
         // Заполнение истории конвертаций
-        historyRepo.save(new History(left.get(0).getName(), right.get(0).getName(),
+        historyRepo.save(new History(getCurrentUsername(), left.get(0).getName(), right.get(0).getName(),
                 seed, result, dateNow()));
         return "converter";
     }
@@ -99,8 +99,8 @@ public class ConverterController {
 
         // Получение списков валют для фильтров
         List<Currency> currency = Collections.singletonList(new Currency("Все", 0.0, "0"));
-        List<History> history = historyRepo.findByCurrencyLeftContainingAndCurrencyRightContainingAndDateConvert
-                ("", "", dateNow());
+        List<History> history = historyRepo.findByCurrencyLeftContainingAndCurrencyRightContainingAndDateConvertAndUsername
+                ("", "", dateNow(), getCurrentUsername());
 
         // Заполнение дефолтных значений фильтра валют
         model.put("currency_left", currency);
@@ -152,8 +152,8 @@ public class ConverterController {
 
         // Выгрузка отфильтрованной истории
         model.put("history",
-                historyRepo.findByCurrencyLeftContainingAndCurrencyRightContainingAndDateConvert(left_cur,
-                        right_cur, date));
+                historyRepo.findByCurrencyLeftContainingAndCurrencyRightContainingAndDateConvertAndUsername(
+                        left_cur, right_cur, date, getCurrentUsername()));
 
         return "history";
     }
@@ -206,5 +206,11 @@ public class ConverterController {
         // Загружаем результат в БД
         for (Currency currency: currencies)
             currencyRepo.save(currency);
+        currencyRepo.save(new Currency("RUB(Российский рубль)", 1.0, dateNow()));
+    }
+
+    // Встроенный метод для подгрузки username текущего пользователя
+    public String getCurrentUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
