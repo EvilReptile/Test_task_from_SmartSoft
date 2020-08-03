@@ -22,13 +22,7 @@ public class SecurityController {
     // Если пользователь авторизован - редиректим на страницу с калькулятором валют
     @GetMapping("/")
     public String main(Map<String, Object> model){
-        return "redirect:/login";
-    }
-
-    // Запрос на логинезацию пользователя
-    @GetMapping("/login")
-    public String login(Map<String, Object> model){
-        return "login";
+        return "redirect:/converter";
     }
 
     // Запрос на страницу для регистрации пользователя

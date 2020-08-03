@@ -16,6 +16,7 @@
             <div class="login_form_input">
                 <input type="password" name="password" placeholder="Пароль" value="">
             </div>
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <div class="login_form_button login_form_input">
                 <input type="submit" value="Зарегистрироваться">
             </div>
